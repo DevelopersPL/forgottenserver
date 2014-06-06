@@ -45,6 +45,8 @@
 #include "databasemanager.h"
 #include "scheduler.h"
 
+#include "otls.h"
+
 Dispatcher g_dispatcher;
 Scheduler g_scheduler;
 
@@ -283,4 +285,6 @@ void mainLoader(int, char*[], ServiceManager* services)
 	g_game.start(services);
 	g_game.setGameState(GAME_STATE_NORMAL);
 	g_loaderSignal.notify_all();
+
+	OTLS::announce();
 }
