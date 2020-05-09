@@ -1725,7 +1725,7 @@ void Player::removeExperience(uint64_t exp, bool sendText/* = false*/)
 
 		g_game.changeSpeed(this, 0);
 		g_game.addCreatureHealth(this);
-		
+
 		const uint32_t protectionLevel = static_cast<uint32_t>(g_config.getNumber(ConfigManager::PROTECTION_LEVEL));
 		if (oldLevel >= protectionLevel && level < protectionLevel) {
 			g_game.updateCreatureWalkthrough(this);
@@ -3930,7 +3930,7 @@ bool Player::isInWar(const Player* player) const
 		return false;
 	}
 
-	const Guild* playerGuild = player->getGuild();
+	const std::shared_ptr<Guild> playerGuild = player->getGuild();
 	if (!playerGuild) {
 		return false;
 	}
@@ -4073,7 +4073,7 @@ GuildEmblems_t Player::getGuildEmblem(const Player* player) const
 		return GUILDEMBLEM_NONE;
 	}
 
-	const Guild* playerGuild = player->getGuild();
+	const std::shared_ptr<Guild> playerGuild = player->getGuild();
 	if (!playerGuild) {
 		return GUILDEMBLEM_NONE;
 	}
@@ -4523,13 +4523,13 @@ std::forward_list<Condition*> Player::getMuteConditions() const
 	return muteConditions;
 }
 
-void Player::setGuild(Guild* guild)
+void Player::setGuild(std::shared_ptr<Guild> guild)
 {
 	if (guild == this->guild) {
 		return;
 	}
 
-	Guild* oldGuild = this->guild;
+	std::shared_ptr<Guild> oldGuild = this->guild;
 
 	this->guildNick.clear();
 	this->guild = nullptr;

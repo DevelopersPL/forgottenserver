@@ -79,4 +79,5 @@ class Guild
 		uint32_t memberCount = 0;
 };
 
+using Guild_ptr = std::shared_ptr<Guild>;
 #endif

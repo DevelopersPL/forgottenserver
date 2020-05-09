@@ -26,7 +26,7 @@ using GuildWarVector = std::vector<uint32_t>;
 class IOGuild
 {
 	public:
-		static Guild* loadGuild(uint32_t guildId);
+		static std::shared_ptr<Guild> loadGuild(uint32_t guildId);
 		static uint32_t getGuildIdByName(const std::string& name);
 		static void getWarList(uint32_t guildId, GuildWarVector& guildWarVector);
 };

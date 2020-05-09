@@ -72,9 +72,7 @@ Game::Game()
 
 Game::~Game()
 {
-	for (const auto& it : guilds) {
-		delete it.second;
-	}
+
 }
 
 void Game::start(ServiceManager* manager)
@@ -5026,7 +5024,7 @@ void Game::sendGuildMotd(uint32_t playerId)
 		return;
 	}
 
-	Guild* guild = player->getGuild();
+	std::shared_ptr<Guild> guild = player->getGuild();
 	if (guild) {
 		player->sendChannelMessage("Message of the Day", guild->getMotd(), TALKTYPE_CHANNEL_R1, CHANNEL_GUILD);
 	}
@@ -5641,7 +5639,7 @@ void Game::removeMonster(Monster* monster)
 	monsters.erase(monster->getID());
 }
 
-Guild* Game::getGuild(uint32_t id) const
+std::shared_ptr<Guild> Game::getGuild(uint32_t id) const
 {
 	auto it = guilds.find(id);
 	if (it == guilds.end()) {
@@ -5650,7 +5648,7 @@ Guild* Game::getGuild(uint32_t id) const
 	return it->second;
 }
 
-void Game::addGuild(Guild* guild)
+void Game::addGuild(std::shared_ptr<Guild>& guild)
 {
 	guilds[guild->getId()] = guild;
 }

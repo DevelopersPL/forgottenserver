@@ -23,13 +23,13 @@
 #include "guild.h"
 #include "ioguild.h"
 
-Guild* IOGuild::loadGuild(uint32_t guildId)
+std::shared_ptr<Guild> IOGuild::loadGuild(uint32_t guildId)
 {
 	Database& db = Database::getInstance();
 	std::ostringstream query;
 	query << "SELECT `name` FROM `guilds` WHERE `id` = " << guildId;
 	if (DBResult_ptr result = db.storeQuery(query.str())) {
-		Guild* guild = new Guild(guildId, result->getString("name"));
+		auto guild = std::make_shared<Guild>(guildId, result->getString("name"));
 
 		query.str(std::string());
 		query << "SELECT `id`, `name`, `level` FROM `guild_ranks` WHERE `guild_id` = " << guildId;
